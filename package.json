@@ -9,7 +9,7 @@
     "lint:fix": "prettier --write . && eslint . --fix",
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "dev": "cross-env NODE_ENV=development webpack --mode development",
-    "start": "cross-env NODE_ENV=development webpack serve --mode development",
+    "start": "cross-env NODE_ENV=development webpack serve --mode development --open",
     "prepare": "husky install",
     "deploy": "npm run build && gh-pages -d dist"
   },

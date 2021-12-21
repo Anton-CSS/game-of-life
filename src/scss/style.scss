@@ -8,5 +8,41 @@
 body {
   width: 100vw;
   height: 100vh;
-  background: url("../img/bg.jpg") no-repeat center / cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.field {
+  width: 50%;
+  height: 50%;
+  .cell {
+    border: 1px solid black;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.cell__alive {
+  background-color: indianred;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 15px;
+  text-transform: uppercase;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  background-color: #2f6caf;
+  color: white;
+  transition: all 0.3s linear;
+  &:hover {
+    cursor: pointer;
+    background-color: #b756af;
+    color: black;
+    transition: all 0.3s linear;
+  }
 }
