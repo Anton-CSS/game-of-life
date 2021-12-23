@@ -1,6 +1,6 @@
-export const sleep = async (x) => {
+export const sleep = async (x: number) => {
   const time = new Promise((resolve) => {
     setTimeout(resolve, x);
   });
-  return time;
+  console.log(time);
 };

@@ -1,4 +1,8 @@
-export const getNumberOfLiveAround = (field, x, y) => {
+export const getNumberOfLiveAround = (
+  field: number[][],
+  x: number,
+  y: number
+) => {
   let result = 0;
   if (y - 1 >= 0 && y - 1 < field.length) {
     result += field[y - 1][x - 1] ?? 0;

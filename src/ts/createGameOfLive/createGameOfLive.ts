@@ -1,13 +1,18 @@
 import drawField from "../drawField/drawField";
 import { getNextGeneration } from "../getNextGeneration/getNextGeneration";
 
-export const createGameOfLive = (el, height = 20, width = 20, steep = 1000) => {
-  let field = Array.from({ length: height }).map(() =>
+export const createGameOfLive = (
+  el: HTMLElement,
+  height: number = 20,
+  width: number = 20,
+  steep: number = 1000
+) => {
+  let field: any = Array.from({ length: height }).map(() =>
     Array.from({ length: width }).fill(0)
   );
-  const app = document.createElement("div");
+  const app = document.createElement("div") as HTMLDivElement;
 
-  const onCellClick = (x, y, isAlive) => {
+  const onCellClick = (x: number, y: number, isAlive: boolean): void => {
     field[y][x] = !isAlive;
     drawField(app, field, onCellClick);
   };
@@ -18,11 +23,10 @@ export const createGameOfLive = (el, height = 20, width = 20, steep = 1000) => {
   const button = document.createElement("button");
   button.textContent = "start";
   button.classList.add("btn__switch");
-  let timerId;
+  let timerId: any;
 
   button.addEventListener("click", () => {
     const makeGameStep = () => {
-      console.log("step");
       field = getNextGeneration(field);
       drawField(app, field, onCellClick);
     };

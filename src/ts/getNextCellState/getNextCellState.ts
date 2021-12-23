@@ -1,4 +1,4 @@
-export default function getNextCellState(state, neighbors) {
+export default function getNextCellState(state: boolean, neighbors: number) {
   if (state === false && neighbors === 3) {
     return true;
   }

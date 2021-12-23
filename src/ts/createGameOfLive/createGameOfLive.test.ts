@@ -2,21 +2,22 @@ import { createGameOfLive } from "./createGameOfLive";
 import { sleep } from "../sleep";
 
 describe("createGameOfLive", () => {
-  let el;
+  let el: any;
   const step = 1000;
-  const clickCell = (x, y) => {
+
+  beforeEach(() => {
+    el = document.createElement("div") as HTMLDivElement;
+    createGameOfLive(el);
+  });
+
+  const clickCell = (x: number, y: number): void => {
     el.querySelector(`.cell[data-y="${y}"][data-x="${x}"]`).click();
   };
 
-  const isCellAlive = (x, y) =>
+  const isCellAlive = (x: number, y: number): boolean =>
     el
       .querySelector(`.cell[data-y="${y}"][data-x="${x}"]`)
       .classList.contains("cell__alive");
-
-  beforeEach(() => {
-    el = document.createElement("div");
-    createGameOfLive(el);
-  });
 
   it("createGameOfLive is a function", () => {
     expect(createGameOfLive).toBeInstanceOf(Function);

@@ -39,12 +39,15 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
-  entry: "./index.js",
+  entry: "./index.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: filename("js"),
     clean: true,
     publicPath: "/",
+  },
+  resolve: {
+    extensions: [".js", ".ts"],
   },
   devServer: {
     port: 3000,
@@ -74,9 +77,11 @@ module.exports = {
         type: "asset/resource",
       },
       {
-        test: /\.js$/i,
-        exclude: /node_modules/,
-        use: ["babel-loader"],
+        test: /\.(j|t)s$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: "babel-loader",
+        },
       },
     ],
   },

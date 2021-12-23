@@ -25,9 +25,9 @@ describe("getNextCellState", () => {
     [false, 8, false],
   ].forEach(([currentState, aliveAround, expectedState]) => {
     it(`return ${expectedState} for (${currentState}, ${aliveAround}`, () => {
-      expect(getNextCellState(currentState, aliveAround)).toEqual(
-        expectedState
-      );
+      expect(
+        getNextCellState(currentState as boolean, aliveAround as number)
+      ).toEqual(expectedState as boolean);
     });
   });
 });

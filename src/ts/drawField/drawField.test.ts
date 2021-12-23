@@ -1,11 +1,11 @@
 import drawField from "./drawField";
 
 describe("drawField", () => {
-  let el;
-  let onCellClick;
+  let el: any;
+  let onCellClick: any;
   beforeEach(() => {
     onCellClick = jest.fn();
-    el = document.createElement("div");
+    el = document.createElement("div") as HTMLDivElement;
   });
   it("drawField is a function", () => {
     expect(drawField).toBeInstanceOf(Function);

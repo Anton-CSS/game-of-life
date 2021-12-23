@@ -1,7 +1,7 @@
 import { getNumberOfLiveAround } from "./getNumberOfLiveAround";
 
 describe("getNumberOfLiveAround", () => {
-  const field = [
+  const field: number[][] = [
     [0, 1, 1, 0],
     [0, 0, 1, 0],
     [1, 1, 1, 1],

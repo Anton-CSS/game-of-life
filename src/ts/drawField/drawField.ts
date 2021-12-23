@@ -1,4 +1,8 @@
-const drawField = (el, field, onCellClick) => {
+const drawField = (
+  el: HTMLElement,
+  field: Array<Array<number>>,
+  onCellClick: (x: number, y: number, isAlive: boolean) => void
+) => {
   el.innerHTML = "";
   const table = document.createElement("table");
   table.className = "field";
