@@ -1,7 +1,18 @@
 import { createGameOfLive } from "./createGameOfLive";
+import { sleep } from "../sleep";
 
 describe("createGameOfLive", () => {
   let el;
+  const step = 1000;
+  const clickCell = (x, y) => {
+    el.querySelector(`.cell[data-y="${y}"][data-x="${x}"]`).click();
+  };
+
+  const isCellAlive = (x, y) =>
+    el
+      .querySelector(`.cell[data-y="${y}"][data-x="${x}"]`)
+      .classList.contains("cell__alive");
+
   beforeEach(() => {
     el = document.createElement("div");
     createGameOfLive(el);
@@ -19,7 +30,7 @@ describe("createGameOfLive", () => {
   });
 
   it("render button (and toggles is state on click)", () => {
-    const button = el.querySelector("button");
+    const button = el.querySelector(".btn__switch");
     expect(button).toBeTruthy();
     expect(button.textContent).toBe("start");
     button.click();
@@ -40,5 +51,60 @@ describe("createGameOfLive", () => {
         .querySelector(`.cell[data-y="${y}"][data-x="${x}"]`)
         .classList.contains("cell__alive")
     ).toBe(true);
+  });
+
+  it("it changes field state over time (runs game loop) and stops it", async () => {
+    clickCell(2, 1);
+    clickCell(2, 2);
+    clickCell(2, 3);
+
+    expect(isCellAlive(2, 1)).toBe(true);
+    expect(isCellAlive(2, 2)).toBe(true);
+    expect(isCellAlive(2, 3)).toBe(true);
+    expect(isCellAlive(1, 1)).toBe(false);
+    expect(isCellAlive(1, 2)).toBe(false);
+    expect(isCellAlive(1, 3)).toBe(false);
+    expect(isCellAlive(3, 1)).toBe(false);
+    expect(isCellAlive(3, 2)).toBe(false);
+    expect(isCellAlive(3, 3)).toBe(false);
+
+    el.querySelector(".btn__switch").click();
+
+    await sleep(step);
+
+    expect(isCellAlive(1, 2)).toBe(false);
+    expect(isCellAlive(2, 2)).toBe(true);
+    expect(isCellAlive(3, 2)).toBe(false);
+    expect(isCellAlive(1, 1)).toBe(false);
+    expect(isCellAlive(2, 1)).toBe(true);
+    expect(isCellAlive(3, 1)).toBe(false);
+    expect(isCellAlive(1, 3)).toBe(false);
+    expect(isCellAlive(2, 3)).toBe(true);
+    expect(isCellAlive(3, 3)).toBe(false);
+
+    await sleep(step);
+
+    expect(isCellAlive(2, 1)).toBe(true);
+    expect(isCellAlive(2, 2)).toBe(true);
+    expect(isCellAlive(2, 3)).toBe(true);
+    expect(isCellAlive(1, 1)).toBe(false);
+    expect(isCellAlive(1, 2)).toBe(false);
+    expect(isCellAlive(1, 3)).toBe(false);
+    expect(isCellAlive(3, 1)).toBe(false);
+    expect(isCellAlive(3, 2)).toBe(false);
+    expect(isCellAlive(3, 3)).toBe(false);
+
+    el.querySelector(".btn__switch").click();
+
+    await sleep(step * 2);
+    expect(isCellAlive(2, 1)).toBe(true);
+    expect(isCellAlive(2, 2)).toBe(true);
+    expect(isCellAlive(2, 3)).toBe(true);
+    expect(isCellAlive(1, 1)).toBe(false);
+    expect(isCellAlive(1, 2)).toBe(false);
+    expect(isCellAlive(1, 3)).toBe(false);
+    expect(isCellAlive(3, 1)).toBe(false);
+    expect(isCellAlive(3, 2)).toBe(false);
+    expect(isCellAlive(3, 3)).toBe(false);
   });
 });

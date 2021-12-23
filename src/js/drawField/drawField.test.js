@@ -46,22 +46,6 @@ describe("drawField", () => {
     });
   });
 
-  // it('drawField renders correct state for cells(all alive)', () =>{
-  //
-  // })
-  // it('drawField renders correct state for cells(all are dead)', () =>{
-  //
-  // })
-  // it('drawField renders correct state for cells(mix 1)', () =>{
-  //
-  // })
-  // it('drawField renders correct state for cells(mix 2)', () =>{
-  //
-  // })
-  // it('drawField renders correct state for cells(mix 3)', () =>{
-  //
-  // })
-
   it("drawField calls onCellClick with proper params on cell click", () => {
     const state = [
       [0, 1, 1],

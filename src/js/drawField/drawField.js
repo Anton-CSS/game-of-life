@@ -18,12 +18,6 @@ const drawField = (el, field, onCellClick) => {
     });
   });
   el.insertAdjacentElement("afterbegin", table);
-  const button = document.createElement("button");
-  button.textContent = "start";
-  button.addEventListener("click", () => {
-    button.textContent = button.textContent === "start" ? "stop" : "start";
-  });
-  el.insertAdjacentElement("beforeend", button);
 };
 
 export default drawField;
