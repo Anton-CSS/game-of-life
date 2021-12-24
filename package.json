@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "prettier --check . && eslint . --ext .js, .ts && tsc --noEmit",
-    "lint:fix": "prettier --write . && eslint . --fix --ext .js, .ts && tsc --noEmit",
+    "lint": "prettier --check . && eslint . --ext .js,.ts && tsc --noEmit",
+    "lint:fix": "prettier --write . && eslint . --fix --ext .js,.ts && tsc --noEmit",
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "dev": "cross-env NODE_ENV=development webpack --mode development",
     "start": "cross-env NODE_ENV=development webpack serve --mode development --open",
