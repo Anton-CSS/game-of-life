@@ -13,6 +13,11 @@
     "prepare": "husky install",
     "deploy": "npm run build && gh-pages -d dist"
   },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "IE 10"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Anton-CSS/game-of-life.git"
@@ -24,6 +29,10 @@
   },
   "homepage": "https://github.com/Anton-CSS/game-of-life#readme",
   "devDependencies": {
+    "postcss": "^8.4.5",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.1.0",
+    "style-loader": "^3.3.1",
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.5",
     "@babel/preset-env": "^7.14.0",

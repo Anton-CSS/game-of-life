@@ -66,7 +66,7 @@ export const createGameOfLive = (
 
   firstInputNum.addEventListener("input", () => {
     width = Number(firstInputNum.value);
-    startGame();
+    if (width >= 10 && width <= 50) startGame();
   });
 
   secondInputNum.className = "input__height";
@@ -77,7 +77,7 @@ export const createGameOfLive = (
 
   secondInputNum.addEventListener("input", () => {
     height = Number(secondInputNum.value);
-    startGame();
+    if (height >= 10 && height <= 50) startGame();
   });
 
   thirdInputRange.className = "input__range";
@@ -85,6 +85,7 @@ export const createGameOfLive = (
   thirdInputRange.setAttribute("min", "1");
   thirdInputRange.setAttribute("max", "5");
   thirdInputRange.setAttribute("step", "1");
+  thirdInputRange.value = "1";
 
   thirdInputRange.addEventListener("change", () => {
     step = Number(thirdInputRange.value) * 1000;

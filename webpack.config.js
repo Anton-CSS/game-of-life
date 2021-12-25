@@ -1,50 +1,23 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 
-const isDev = process.env.NODE_ENV === "development";
-const isProd = !isDev;
+let mode = "development";
+if (process.env.NODE_ENV === "production") {
+  mode = "production";
+}
 
-const filename = (ext) =>
-  isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
-
-const optimization = () => {
-  const config = {};
-
-  if (isProd) {
-    config.minimizer = [new CssMinimizerPlugin(), new TerserPlugin()];
-  }
-  return config;
-};
-
-const plugins = () => {
-  const base = [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "src/index.html"),
-      filename: "index.html",
-      minify: {
-        collapseWhitespace: isProd,
-      },
-    }),
-    new MiniCssExtractPlugin({
-      filename: `./css/${filename("css")}`,
-    }),
-  ];
-
-  return base;
-};
+const name = () => (mode === "development" ? `[name]` : `[name].[contenthash]`);
 
 module.exports = {
   context: path.resolve(__dirname, "src"),
-  mode: "development",
+  mode: mode,
   entry: "./index.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: filename("js"),
+    filename: `${name()}.js`,
     clean: true,
-    publicPath: "/",
+    publicPath: "",
   },
   resolve: {
     extensions: [".js", ".ts"],
@@ -53,27 +26,46 @@ module.exports = {
     port: 3000,
     hot: true,
   },
-  devtool: isProd ? false : "source-map",
-  optimization: optimization(),
-  plugins: plugins(),
+  devtool: "source-map",
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: `./css/${name()}.css`,
+    }),
+    new HtmlWebpackPlugin({
+      template: "./index.html",
+    }),
+  ],
   module: {
     rules: [
       {
-        test: /\.s[ac]ss$/,
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
         use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: "postcss-loader",
             options: {
-              publicPath: (resourcePath, context) =>
-                `${path.relative(path.dirname(resourcePath), context)}/`,
+              postcssOptions: {
+                plugins: [
+                  [
+                    "postcss-preset-env",
+                    {
+                      // Options
+                    },
+                  ],
+                ],
+              },
             },
           },
-          "css-loader",
           "sass-loader",
         ],
       },
       {
-        test: /\.(png|jpg|svg|gif|jpeg)$/i,
+        test: /\.(png|jpg|svg|gif|jpeg|webp)$/i,
         type: "asset/resource",
       },
       {
