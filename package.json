@@ -7,9 +7,9 @@
     "test": "jest",
     "lint": "prettier --check . && eslint . --ext .js,.ts && tsc --noEmit",
     "lint:fix": "prettier --write . && eslint . --fix --ext .js,.ts && tsc --noEmit",
-    "build": "cross-env NODE_ENV=production webpack --mode production",
-    "dev": "cross-env NODE_ENV=development webpack --mode development",
-    "start": "cross-env NODE_ENV=development webpack serve --mode development --open",
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "cross-env NODE_ENV=development webpack",
+    "start": "cross-env NODE_ENV=development webpack serve --open",
     "prepare": "husky install",
     "deploy": "npm run build && gh-pages -d dist"
   },

@@ -10,17 +10,11 @@ export const createGameOfLive = (
   let field: any = Array.from({ length: height }).map(() =>
     Array.from({ length: width }).fill(0)
   );
+
   const app = document.createElement("div") as HTMLDivElement;
 
   const onCellClick = (x: number, y: number, isAlive: boolean): void => {
-    field[y][x] = !isAlive;
-    drawField(app, field, onCellClick);
-  };
-
-  const startGame = (): void => {
-    field = Array.from({ length: height }).map(() =>
-      Array.from({ length: width }).fill(0)
-    );
+    field[y][x] = isAlive ? 0 : 1;
     drawField(app, field, onCellClick);
   };
 
@@ -31,25 +25,57 @@ export const createGameOfLive = (
   button.textContent = "start";
   button.classList.add("btn__switch");
 
-  let timerId: any;
+  let timerId: number;
 
-  const handlerButton = (speed: number): void => {
-    const makeGameStep = () => {
+  const gameIsOver = (array: number[][]): boolean => {
+    const result = array.some((arr) => arr.some((item) => item === 1));
+    return result;
+  };
+
+  const makeGameStep = () => {
+    if (gameIsOver(field)) {
       field = getNextGeneration(field);
       drawField(app, field, onCellClick);
-    };
+    } else {
+      clearInterval(timerId);
+      button.textContent = "start";
+    }
+  };
+
+  const handlerButton = (speed: number): void => {
     if (button.textContent === "start") {
       button.textContent = "stop";
-      timerId = setInterval(makeGameStep, speed);
+      timerId = window.setInterval(makeGameStep, speed);
     } else {
       button.textContent = "start";
       clearInterval(timerId);
-      field = Array.from({ length: height }).map(() =>
-        Array.from({ length: width }).fill(0)
-      );
-      drawField(app, field, onCellClick);
     }
   };
+
+  const HaveDrown = () => {
+    window.clearInterval(timerId);
+    const newField: any = Array.from({ length: height }).map(() =>
+      Array.from({ length: width }).fill(0)
+    );
+
+    newField.forEach((array: Array<number>, y: number) => {
+      array.forEach((item, x) => {
+        if (
+          (field[y] && field[y][x] === 0) ||
+          (field[y] && field[y][x] === 1)
+        ) {
+          newField[y][x] = field[y][x];
+        }
+      });
+    });
+
+    field = JSON.parse(JSON.stringify(newField));
+    drawField(app, field, onCellClick);
+    if (button.textContent === "stop") {
+      timerId = window.setInterval(makeGameStep, step);
+    }
+  };
+
   button.addEventListener("click", () => {
     handlerButton(step);
   });
@@ -60,35 +86,38 @@ export const createGameOfLive = (
 
   firstInputNum.className = "input__width";
   firstInputNum.setAttribute("type", "number");
-  firstInputNum.setAttribute("min", "10");
-  firstInputNum.setAttribute("max", "50");
+  firstInputNum.setAttribute("min", "5");
+  firstInputNum.setAttribute("max", "20");
   firstInputNum.setAttribute("step", "1");
+  firstInputNum.setAttribute("placeholder", "width from 5 to 20");
 
   firstInputNum.addEventListener("input", () => {
     width = Number(firstInputNum.value);
-    if (width >= 10 && width <= 50) startGame();
+    if (width >= 10 && width <= 50) HaveDrown();
   });
 
   secondInputNum.className = "input__height";
   secondInputNum.setAttribute("type", "number");
-  secondInputNum.setAttribute("min", "10");
-  secondInputNum.setAttribute("max", "50");
+  secondInputNum.setAttribute("min", "5");
+  secondInputNum.setAttribute("max", "20");
   secondInputNum.setAttribute("step", "1");
+  secondInputNum.setAttribute("placeholder", "height from 5 to 20");
 
   secondInputNum.addEventListener("input", () => {
     height = Number(secondInputNum.value);
-    if (height >= 10 && height <= 50) startGame();
+    if (height >= 5 && height <= 20) HaveDrown();
   });
 
   thirdInputRange.className = "input__range";
   thirdInputRange.setAttribute("type", "range");
-  thirdInputRange.setAttribute("min", "1");
-  thirdInputRange.setAttribute("max", "5");
-  thirdInputRange.setAttribute("step", "1");
+  thirdInputRange.setAttribute("min", "0.5");
+  thirdInputRange.setAttribute("max", "2");
+  thirdInputRange.setAttribute("step", "0.5");
   thirdInputRange.value = "1";
 
   thirdInputRange.addEventListener("change", () => {
     step = Number(thirdInputRange.value) * 1000;
+    HaveDrown();
   });
 
   const wrapper = document.createElement("div");
