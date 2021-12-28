@@ -98,9 +98,9 @@ describe("createGameOfLive", () => {
     el.querySelector(".btn__switch").click();
 
     await sleep(step * 2);
-    expect(isCellAlive(2, 1)).toBe(false);
-    expect(isCellAlive(2, 2)).toBe(false);
-    expect(isCellAlive(2, 3)).toBe(false);
+    expect(isCellAlive(2, 1)).toBe(true);
+    expect(isCellAlive(2, 2)).toBe(true);
+    expect(isCellAlive(2, 3)).toBe(true);
     expect(isCellAlive(1, 1)).toBe(false);
     expect(isCellAlive(1, 2)).toBe(false);
     expect(isCellAlive(1, 3)).toBe(false);

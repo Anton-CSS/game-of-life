@@ -52,7 +52,7 @@ export const createGameOfLive = (
     }
   };
 
-  const HaveDrown = () => {
+  const haveDrown = () => {
     window.clearInterval(timerId);
     const newField: any = Array.from({ length: height }).map(() =>
       Array.from({ length: width }).fill(0)
@@ -93,7 +93,7 @@ export const createGameOfLive = (
 
   firstInputNum.addEventListener("input", () => {
     width = Number(firstInputNum.value);
-    if (width >= 10 && width <= 50) HaveDrown();
+    if (width >= 10 && width <= 50) haveDrown();
   });
 
   secondInputNum.className = "input__height";
@@ -105,7 +105,7 @@ export const createGameOfLive = (
 
   secondInputNum.addEventListener("input", () => {
     height = Number(secondInputNum.value);
-    if (height >= 5 && height <= 20) HaveDrown();
+    if (height >= 5 && height <= 20) haveDrown();
   });
 
   thirdInputRange.className = "input__range";
@@ -117,7 +117,7 @@ export const createGameOfLive = (
 
   thirdInputRange.addEventListener("change", () => {
     step = Number(thirdInputRange.value) * 1000;
-    HaveDrown();
+    haveDrown();
   });
 
   const wrapper = document.createElement("div");
